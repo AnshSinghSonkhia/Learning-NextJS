@@ -17,3 +17,35 @@ Next.js provides several methods for data fetching that allow you to fetch data 
 7. **SWR with Next.js**: Combining Next.js with SWR is a powerful way to fetch and manage data in your application. It enables efficient client-side data fetching, automatic revalidation, and caching.
 
 Next.js provides a flexible data fetching architecture that caters to different scenarios, making it suitable for a wide range of applications. Depending on your data requirements and performance goals, you can choose the appropriate data fetching method for each page or component in your Next.js application.
+
+
+## Server-Side Rendering (SSR), Static Site Generation (SSG), and Incremental Static Regeneration (ISR) in Next.js
+
+Next.js offers different data fetching methods to optimize your application's performance and improve user experience. Three key strategies are Server-Side Rendering (SSR), Static Site Generation (SSG), and Incremental Static Regeneration (ISR). Let's explore each one:
+
+### Server-Side Rendering (SSR)
+
+- **Definition**: SSR is a method of rendering web pages on the server and sending fully rendered HTML to the client. When a user requests a page, the server fetches data, renders the page, and sends it to the client already populated with data.
+
+- **Use Case**: SSR is ideal for pages that require frequently updated data, pages with personalized content, or applications that rely heavily on SEO. It ensures that the user gets the latest data on each request and helps with initial page load times.
+
+- **Usage in Next.js**: You can use the `getServerSideProps` function in Next.js to perform SSR. This function runs on the server for each request and can fetch data from APIs or databases before rendering the page.
+
+### Static Site Generation (SSG)
+
+- **Definition**: SSG is a method of generating static HTML files at build time, eliminating the need to render pages on each request. These pre-rendered pages are served to users directly from a Content Delivery Network (CDN).
+
+- **Use Case**: SSG is suitable for pages with content that doesn't change frequently. It significantly improves performance, reduces server load, and ensures fast loading times for users.
+
+- **Usage in Next.js**: You can use the `getStaticProps` function in Next.js to implement SSG. This function runs at build time and fetches data, generating static HTML files for each page. These static pages are then served to users without additional server processing.
+
+### Incremental Static Regeneration (ISR)
+
+- **Definition**: ISR is a hybrid approach that combines the benefits of SSR and SSG. It allows you to update pre-rendered pages on the fly, even after deployment, without the need to rebuild the entire application.
+
+- **Use Case**: ISR is ideal for pages with semi-static content that needs periodic updates. It ensures that the most recent data is available to users without sacrificing the advantages of static HTML delivery.
+
+- **Usage in Next.js**: You can use the `revalidate` option in `getStaticProps` to enable ISR. This option specifies how often Next.js should re-generate the page in the background. When a user requests the page, they receive the static page, and Next.js schedules a re-generation in the background based on the `revalidate` value.
+
+Next.js's flexibility with SSR, SSG, and ISR allows you to choose the most suitable data fetching method for each page in your application. By leveraging these strategies effectively, you can create high-performance web applications with improved user experiences.
+
