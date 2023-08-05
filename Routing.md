@@ -27,3 +27,120 @@ Next.js provides a powerful and straightforward routing system for building Sing
 12. Custom App and Document: For advanced customization, you can use `_app.tsx` and `_document.tsx` files to extend the default behavior of the Next.js app and document components.
 
 Next.js routing is designed to be intuitive and developer-friendly, allowing you to create complex SPAs with ease. It seamlessly integrates with React components, and the file-based approach makes it easy to organize and maintain your application's routes.
+
+
+## Here are code examples of different routing techniques in Next.js:
+
+### 1. Basic Routing:
+
+```jsx
+// pages/index.js
+
+const HomePage = () => {
+  return (
+    <div>
+      <h1>Welcome to the Home Page!</h1>
+    </div>
+  );
+};
+
+export default HomePage;
+```
+
+### 2. Nested Routing:
+
+```jsx
+// pages/products/index.js
+
+const ProductsPage = () => {
+  return (
+    <div>
+      <h1>Products Page</h1>
+    </div>
+  );
+};
+
+export default ProductsPage;
+```
+
+```jsx
+// pages/products/laptops.js
+
+const LaptopsPage = () => {
+  return (
+    <div>
+      <h1>Laptops Page</h1>
+    </div>
+  );
+};
+
+export default LaptopsPage;
+```
+
+### 3. Dynamic Routing:
+
+```jsx
+// pages/posts/[postId].js
+
+import { useRouter } from 'next/router';
+
+const Post = () => {
+  const router = useRouter();
+  const { postId } = router.query;
+
+  return (
+    <div>
+      <h1>Post ID: {postId}</h1>
+    </div>
+  );
+};
+
+export default Post;
+```
+
+### 4. Catch-All Routes:
+
+```jsx
+// pages/products/[...slug].js
+
+import { useRouter } from 'next/router';
+
+const ProductDetails = () => {
+  const router = useRouter();
+  const { slug } = router.query;
+
+  return (
+    <div>
+      <h1>Product Details: {slug.join('/')}</h1>
+    </div>
+  );
+};
+
+export default ProductDetails;
+```
+
+### 5. Link Component:
+
+```jsx
+// pages/index.js
+
+import Link from 'next/link';
+
+const HomePage = () => {
+  return (
+    <div>
+      <h1>Welcome to the Home Page!</h1>
+      <Link href="/about">
+        <a>About Us</a>
+      </Link>
+      <Link href="/products">
+        <a>Products</a>
+      </Link>
+    </div>
+  );
+};
+
+export default HomePage;
+```
+
+These examples cover various routing techniques in Next.js, including basic routes, nested routes, dynamic routes, catch-all routes, and using the `Link` component for client-side navigation. You can copy and paste these code examples into your Next.js project to see how they work.
