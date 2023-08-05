@@ -49,3 +49,105 @@ Next.js offers different data fetching methods to optimize your application's pe
 
 Next.js's flexibility with SSR, SSG, and ISR allows you to choose the most suitable data fetching method for each page in your application. By leveraging these strategies effectively, you can create high-performance web applications with improved user experiences.
 
+
+## Here are code examples for different types of data fetching in Next.js using `getServerSideProps`, `getStaticProps`, and client-side data fetching with SWR:
+
+---
+
+### 1. Server-Side Rendering (SSR) using `getServerSideProps`:
+
+```jsx
+// pages/posts/[postId].js
+
+import axios from 'axios';
+
+const Post = ({ post }) => {
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>{post.body}</p>
+    </div>
+  );
+};
+
+export async function getServerSideProps({ params }) {
+  const { postId } = params;
+  const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+  const post = response.data;
+
+  return {
+    props: {
+      post,
+    },
+  };
+}
+
+export default Post;
+```
+
+### 2. Static Site Generation (SSG) using `getStaticProps`:
+
+```jsx
+// pages/posts.js
+
+import axios from 'axios';
+
+const Posts = ({ posts }) => {
+  return (
+    <div>
+      <h1>Posts</h1>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export async function getStaticProps() {
+  const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+  const posts = response.data;
+
+  return {
+    props: {
+      posts,
+    },
+  };
+}
+
+export default Posts;
+```
+
+### 3. Client-Side Data Fetching using SWR:
+
+```jsx
+// pages/posts.js
+
+import useSWR from 'swr';
+import axios from 'axios';
+
+const fetcher = (url) => axios.get(url).then((res) => res.data);
+
+const Posts = () => {
+  const { data: posts, error } = useSWR('https://jsonplaceholder.typicode.com/posts', fetcher);
+
+  if (error) return <div>Error fetching data</div>;
+  if (!posts) return <div>Loading...</div>;
+
+  return (
+    <div>
+      <h1>Posts</h1>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default Posts;
+```
+
+In these examples, we use Axios as the HTTP client to fetch data from the JSONPlaceholder API. We demonstrate three different data fetching methods: `getServerSideProps` for SSR, `getStaticProps` for SSG, and SWR for client-side data fetching. These methods cater to different use cases, and you can choose the most suitable approach based on your application's requirements.
